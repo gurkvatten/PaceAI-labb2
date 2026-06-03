@@ -34,4 +34,12 @@ public class JwtService {
                 .getPayload()
                 .getSubject();
     }
+    public Long getUserIdFromToken(String token) {
+        return ((Number) Jwts.parser()
+                .verifyWith(getKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("userId")).longValue();
+    }
 }

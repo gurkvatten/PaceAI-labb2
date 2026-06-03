@@ -55,6 +55,11 @@ public class BffController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
+        String token = authHeader.substring(7);
+        Long userId = jwtService.getUserIdFromToken(token);
+        body = new java.util.HashMap<>(body);
+        body.put("senderId", userId);
+
         return messageClient.post()
                 .uri("/messages")
                 .contentType(MediaType.APPLICATION_JSON)
